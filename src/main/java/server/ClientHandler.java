@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * CREATED BY Janus @ 2021-03-08 - 10:15
@@ -15,21 +16,25 @@ public class ClientHandler extends Thread {
     Socket client;
     PrintWriter pw;
     BufferedReader br;
+    BlockingQueue allMsgQ;
 
-    @Override
-    public void run() {
+
+    public ClientHandler(Socket client, BlockingQueue<String> allMsgQ) {
+        this.client = client;
+        this.allMsgQ = allMsgQ;
         try {
-            protocol();
+            pw = new PrintWriter(client.getOutputStream(), true);
+            br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ClientHandler(Socket client) {
-        this.client = client;
+    @Override
+    public void run() {
         try {
-            pw = new PrintWriter(client.getOutputStream(), true);
-            br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            protocol();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,18 +62,18 @@ public class ClientHandler extends Thread {
                     StringBuilder input = new StringBuilder();
                     input.append(messageArr[1]);
                     pw.println(input.reverse());
-                case "TRANSLATE":
-                    Map<String, String> translateMap = new HashMap<>();
-                    translateMap.put("hund", "dog");
-                    if (messageArr[1].equals("hund")) {
-                        pw.println(translateMap);
-                    } else {
-                        pw.println("NOT FOUND");
-                    }
+                case "ALL":
+                    handleMsgToAll();
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    private void handleMsgToAll() throws IOException {
+        pw.println("What would you like to send: ");
+        String msg = br.readLine();
+        allMsgQ.add(msg);
     }
 }
