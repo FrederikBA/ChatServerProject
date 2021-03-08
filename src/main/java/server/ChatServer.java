@@ -24,11 +24,10 @@ public class ChatServer {
             Socket client = serverSocket.accept();
             System.out.println("New client connected");
             ClientHandler clientHandler = new ClientHandler(client);
-            clientHandler.protocol();
+            clientHandler.start();
         }
 
     }
-
     //Call server with arguments like this: 0.0.0.0 8088 logfile.log
     public static void main(String[] args) throws UnknownHostException {
         int port = DEFAULT_PORT;
