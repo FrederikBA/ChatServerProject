@@ -25,7 +25,6 @@ public class ClientHandler extends Thread {
         try {
             pw = new PrintWriter(client.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,27 +44,20 @@ public class ClientHandler extends Thread {
 
         boolean go = true;
         while (go) {
-            String message = br.readLine(); //blocking call
+            String message = br.readLine();
             String[] messageArr = message.split("#");
 
             switch (messageArr[0]) {
                 case "CLOSE":
                     client.close();
                     break;
-                case "UPPER":
-                    pw.println(messageArr[1].toUpperCase());
-                    break;
-                case "LOWER":
-                    pw.println(messageArr[1].toLowerCase());
-                    break;
-                case "REVERSE":
-                    StringBuilder input = new StringBuilder();
-                    input.append(messageArr[1]);
-                    pw.println(input.reverse());
                 case "ALL":
                     handleMsgToAll();
                     break;
                 default:
+                    pw.println("Connection is closing");
+                    go = false;
+                    client.close();
                     break;
             }
         }

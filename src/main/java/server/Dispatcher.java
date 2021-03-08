@@ -17,7 +17,7 @@ public class Dispatcher extends Thread {
         this.allWriters = new ArrayBlockingQueue<>(200);
     }
 
-    public void addWriterToList(PrintWriter pw){
+    public void addWriterToList(PrintWriter pw) {
         allWriters.add(pw);
     }
 
@@ -34,9 +34,8 @@ public class Dispatcher extends Thread {
     }
 
     private void sendMessageToAll(String msg) {
-        for (PrintWriter pw : allWriters ) {
+        for (PrintWriter pw : allWriters) {
             pw.println(msg);
-            
         }
     }
 }

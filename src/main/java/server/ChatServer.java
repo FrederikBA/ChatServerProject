@@ -29,22 +29,17 @@ public class ChatServer {
             System.out.println("Waiting for a client");
             Socket client = serverSocket.accept();
             System.out.println("New client connected");
-            ClientHandler clientHandler = new ClientHandler(client,allMsg);
+            ClientHandler clientHandler = new ClientHandler(client, allMsg);
             dispatcher.addWriterToList(clientHandler.pw);
             clientHandler.start();
         }
 
     }
-    //Call server with arguments like this: 0.0.0.0 8088 logfile.log
-    public static void main(String[] args) throws UnknownHostException {
+
+    public static void main(String[] args) {
         int port = DEFAULT_PORT;
-        if (args.length == 1) {
-            try {
-                port = Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid port number, use default port : " + DEFAULT_PORT);
-            }
-        }
+        System.out.println("Invalid port number, use default port : " + DEFAULT_PORT);
+
         ChatServer server = new ChatServer();
         try {
             server.startServer(port);
@@ -55,11 +50,7 @@ public class ChatServer {
 }
 
 
-/*
-            PrintWriter pw = new PrintWriter(client.getOutputStream(), true);
-            BufferedReader bw = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            //TODO: CONNECT#Username
-            //TODO: SEND#Hans#Hello Hans  -->  SEND#Peter,Hans#Hello Hans  -->  MESSAGE#Peter#Hello Hans
-            Map<String,Socket> myMap = new HashMap<>();
-            myMap.put("Kurt",client);
- */
+//TODO: CONNECT#Username
+//TODO: SEND#Hans#Hello Hans  -->  SEND#Peter,Hans#Hello Hans  -->  MESSAGE#Peter#Hello Hans
+//       Map<String,Socket> myMap = new HashMap<>();
+//       myMap.put("Kurt",client);
