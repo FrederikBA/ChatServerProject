@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * CREATED BY Janus @ 2021-03-08 - 10:15
@@ -23,11 +25,13 @@ public class ClientHandler extends Thread {
     UserService us = new UserService();
     User user = new User();
     String name;
+    public ConcurrentMap<String, PrintWriter> allNameWriters;
 
 
-    public ClientHandler(Socket client, BlockingQueue<String> allMsgQ) {
+    public ClientHandler(Socket client, BlockingQueue<String> allMsgQ, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.client = client;
         this.allMsgQ = allMsgQ;
+        this.allNameWriters = allNameWriters;
         try {
             pw = new PrintWriter(client.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -53,6 +57,7 @@ public class ClientHandler extends Thread {
         switch (messageArr[0]) {
             case "CONNECT":
                 if (us.getUser1().getName().equals(name) || us.getUser2().getName().equals(name) || us.getUser3().getName().equals(name)) {
+                    allNameWriters.put(name, pw);
                     protocol();
                 } else {
                     pw.println("User not found");
@@ -76,8 +81,15 @@ public class ClientHandler extends Thread {
                 case "CLOSE":
                     client.close();
                     break;
+                case "SEND":
+                    //SEND#*#Besked
+                    //Sende til messageArr[1]
+                    //Beskeden er messageArr[2]
+
+                    handleMsgToAll(messageArr);
+                    break;
                 case "ALL":
-                    handleMsgToAll();
+                    // handleMsgToAll();
                     break;
                 case "USERS":
                     showUsers();
@@ -91,10 +103,12 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleMsgToAll() throws IOException {
-        pw.println("What would you like to send: ");
-        String msg = br.readLine();
+    private void handleMsgToAll(String[] messageArr) throws IOException {
+        //pw.println("What would you like to send: ");
+        //String msg = br.readLine();
+        String msg = messageArr[0] + "#" + name + "," + messageArr[1] + "#" + messageArr[2];
         allMsgQ.add(msg);
+        //SEND#Kurt,Lone#Hej Lone
     }
 
     public void showUsers() {

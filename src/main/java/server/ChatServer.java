@@ -13,14 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class ChatServer {
     private static final int DEFAULT_PORT = 5555;
     private ServerSocket serverSocket;
     public BlockingQueue<String> allMsg = new ArrayBlockingQueue<>(250);
+    public ConcurrentMap<String,PrintWriter> allNameWriters = new ConcurrentHashMap<>();
 
     private void startServer(int port) throws IOException {
-        Dispatcher dispatcher = new Dispatcher(allMsg);
+        Dispatcher dispatcher = new Dispatcher(allMsg,allNameWriters);
         dispatcher.start();
         serverSocket = new ServerSocket(port);
 
@@ -29,7 +32,7 @@ public class ChatServer {
             System.out.println("Waiting for a client");
             Socket client = serverSocket.accept();
             System.out.println("New client connected");
-            ClientHandler clientHandler = new ClientHandler(client, allMsg);
+            ClientHandler clientHandler = new ClientHandler(client, allMsg,allNameWriters);
             dispatcher.addWriterToList(clientHandler.pw);
             clientHandler.start();
         }
@@ -48,9 +51,3 @@ public class ChatServer {
         }
     }
 }
-
-
-//TODO: CONNECT#Username
-//TODO: SEND#Hans#Hello Hans  -->  SEND#Peter,Hans#Hello Hans  -->  MESSAGE#Peter#Hello Hans
-//       Map<String,Socket> myMap = new HashMap<>();
-//       myMap.put("Kurt",client);
