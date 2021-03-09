@@ -22,6 +22,7 @@ public class ClientHandler extends Thread {
     BlockingQueue allMsgQ;
     UserService us = new UserService();
     User user = new User();
+    String name;
 
 
     public ClientHandler(Socket client, BlockingQueue<String> allMsgQ) {
@@ -45,12 +46,13 @@ public class ClientHandler extends Thread {
     }
 
     public void login() throws IOException {
-        pw.println("What is your name?");
+        pw.println("Proceed to log in:");
         String message = br.readLine();
         String[] messageArr = message.split("#");
+        name = messageArr[1];
         switch (messageArr[0]) {
             case "CONNECT":
-                if (messageArr[1].equals(user.getName())) {
+                if (us.getUser1().getName().equals(name) || us.getUser2().getName().equals(name) || us.getUser3().getName().equals(name)) {
                     protocol();
                 } else {
                     pw.println("User not found");
@@ -63,6 +65,7 @@ public class ClientHandler extends Thread {
 
     public void protocol() throws IOException {
         pw.println("You are connected");
+        pw.println("Connected as: " + name);
 
         boolean go = true;
         while (go) {
