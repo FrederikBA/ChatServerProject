@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * CREATED BY Janus @ 2021-03-08 - 14:08
@@ -14,10 +15,12 @@ import java.util.concurrent.BlockingQueue;
 public class Dispatcher extends Thread {
     BlockingQueue<String> allMsg;
     BlockingQueue<PrintWriter> allWriters;
+    ConcurrentMap<String, PrintWriter> allNameWriters;
 
-    public Dispatcher(BlockingQueue<String> allMsg) {
+    public Dispatcher(BlockingQueue<String> allMsg, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.allMsg = allMsg;
         this.allWriters = new ArrayBlockingQueue<>(200);
+        this.allNameWriters = allNameWriters;
     }
 
     public void addWriterToList(PrintWriter pw) {
@@ -41,10 +44,23 @@ public class Dispatcher extends Thread {
             pw.println(msg);
         }
     }
-    private void sendMessage(String msg){
-        Map<String, Socket> myMap = new HashMap<>();
-        myMap.put("", );
+
+    private void sendMessage(String msg) {
+        findPrintWriter("Lone").println(msg);
+
+
+        //TODO: SEND#Kurt,Lone#Hej Lone -->  MESSAGE#Kurt#Hej Lone
+        //TODO: Find Lones PrintWriter
     }
 
-
+    private PrintWriter findPrintWriter(String name) {
+        PrintWriter pw = null;
+        pw = allNameWriters.get(name);
+        return pw;
+    }
 }
+
+
+//TODO: SEND#Hans#Hello Hans  -->  SEND#Peter,Hans#Hello Hans  -->  MESSAGE#Peter#Hello Hans
+//      Map<String,Socket> myMap = new HashMap<>();
+//      myMap.put("Kurt",client);
