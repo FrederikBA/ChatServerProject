@@ -103,4 +103,8 @@ public class ClientHandler extends Thread {
 
         }
     }
+    private void sendMessage(String msg){
+        Map<String, Socket> myMap = new HashMap<>();
+        myMap.put("Janus", client);
+    }
 }

@@ -1,6 +1,9 @@
 package server;
 
 import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -38,4 +41,10 @@ public class Dispatcher extends Thread {
             pw.println(msg);
         }
     }
+    private void sendMessage(String msg){
+        Map<String, Socket> myMap = new HashMap<>();
+        myMap.put("", );
+    }
+
+
 }
