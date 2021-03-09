@@ -67,7 +67,6 @@ public class ClientHandler extends Thread {
         }
     }
 
-
     public void protocol() throws IOException {
         pw.println("You are connected");
         pw.println("Connected as: " + name);
@@ -82,14 +81,7 @@ public class ClientHandler extends Thread {
                     client.close();
                     break;
                 case "SEND":
-                    //SEND#*#Besked
-                    //Sende til messageArr[1]
-                    //Beskeden er messageArr[2]
-
-                    handleMsgToAll(messageArr);
-                    break;
-                case "ALL":
-                    // handleMsgToAll();
+                    handleMsg(messageArr);
                     break;
                 case "USERS":
                     showUsers();
@@ -103,12 +95,9 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleMsgToAll(String[] messageArr) throws IOException {
-        //pw.println("What would you like to send: ");
-        //String msg = br.readLine();
-        String msg = messageArr[0] + "#" + name + "," + messageArr[1] + "#" + messageArr[2];
+    private void handleMsg(String[] messageArr) throws IOException {
+        String msg = messageArr[0] + "#" + messageArr[1] + "#" + "\"" + messageArr[2] + "\"" + " from " + name;
         allMsgQ.add(msg);
-        //SEND#Kurt,Lone#Hej Lone
     }
 
     public void showUsers() {
