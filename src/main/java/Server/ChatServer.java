@@ -1,16 +1,10 @@
-package server;
+package Server;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,10 +14,10 @@ public class ChatServer {
     private static final int DEFAULT_PORT = 5555;
     private ServerSocket serverSocket;
     public BlockingQueue<String> allMsg = new ArrayBlockingQueue<>(250);
-    public ConcurrentMap<String,PrintWriter> allNameWriters = new ConcurrentHashMap<>();
+    public ConcurrentMap<String, PrintWriter> allNameWriters = new ConcurrentHashMap<>();
 
     private void startServer(int port) throws IOException {
-        Dispatcher dispatcher = new Dispatcher(allMsg,allNameWriters);
+        Dispatcher dispatcher = new Dispatcher(allMsg, allNameWriters);
         dispatcher.start();
         serverSocket = new ServerSocket(port);
 
@@ -32,7 +26,7 @@ public class ChatServer {
             System.out.println("Waiting for a client");
             Socket client = serverSocket.accept();
             System.out.println("New client connected");
-            ClientHandler clientHandler = new ClientHandler(client, allMsg,allNameWriters);
+            ClientHandler clientHandler = new ClientHandler(client, allMsg, allNameWriters);
             dispatcher.addWriterToList(clientHandler.pw);
             clientHandler.start();
         }
@@ -41,8 +35,6 @@ public class ChatServer {
 
     public static void main(String[] args) {
         int port = DEFAULT_PORT;
-        System.out.println("Invalid port number, use default port : " + DEFAULT_PORT);
-
         ChatServer server = new ChatServer();
         try {
             server.startServer(port);
