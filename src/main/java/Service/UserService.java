@@ -15,7 +15,6 @@ public class UserService {
     User user3 = new User("Frederik");
 
 
-
     public UserService() {
         users = new ArrayList<>();
         addUserToList(user1);
@@ -24,12 +23,24 @@ public class UserService {
     }
 
 
-    public void addUserToList(User user){
+    public void addUserToList(User user) {
         users.add(user);
 
     }
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public User getUser1() {
+        return user1;
+    }
+
+    public User getUser2() {
+        return user2;
+    }
+
+    public User getUser3() {
+        return user3;
     }
 }
