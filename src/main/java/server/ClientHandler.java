@@ -50,6 +50,7 @@ public class ClientHandler extends Thread {
         String[] messageArr = message.split("#");
         switch (messageArr[0]) {
             case "CONNECT":
+                
                 if (messageArr[1].equals(user.getName())) {
                     protocol();
                 } else {
