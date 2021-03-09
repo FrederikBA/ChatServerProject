@@ -46,9 +46,10 @@ public class Dispatcher extends Thread {
     }
 
     private void sendMessage(String msg) {
-        String[] msgArr;
-        findPrintWriter("Lone").println(msg);
-        System.out.println(msg);
+        String[] msgArr = msg.split("#");
+        String users = msgArr[1].toString();
+        String[] userArr = users.split(",");
+        findPrintWriter(userArr[2]).println(msg);
 
 
         //TODO: SEND#Kurt,Lone#Hej Lone -->  MESSAGE#Kurt#Hej Lone
