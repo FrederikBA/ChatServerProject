@@ -1,5 +1,8 @@
 package server;
 
+import Domain.User;
+import Service.UserService;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +20,7 @@ public class ClientHandler extends Thread {
     PrintWriter pw;
     BufferedReader br;
     BlockingQueue allMsgQ;
+    UserService us = new UserService();
 
 
     public ClientHandler(Socket client, BlockingQueue<String> allMsgQ) {
@@ -54,6 +58,9 @@ public class ClientHandler extends Thread {
                 case "ALL":
                     handleMsgToAll();
                     break;
+                case "USERS":
+                    showUsers();
+                    break;
                 default:
                     pw.println("Connection is closing");
                     go = false;
@@ -67,5 +74,12 @@ public class ClientHandler extends Thread {
         pw.println("What would you like to send: ");
         String msg = br.readLine();
         allMsgQ.add(msg);
+    }
+
+    public void showUsers(){
+        for (User u: us.getUsers() ) {
+            pw.println(u);
+
+        }
     }
 }
