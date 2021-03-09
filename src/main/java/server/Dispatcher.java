@@ -32,7 +32,7 @@ public class Dispatcher extends Thread {
         while (true) {
             try {
                 String msg = allMsg.take();
-                sendMessageToAll(msg);
+                sendMessage(msg);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,12 +41,14 @@ public class Dispatcher extends Thread {
 
     private void sendMessageToAll(String msg) {
         for (PrintWriter pw : allWriters) {
-            pw.println(msg);
+
         }
     }
 
     private void sendMessage(String msg) {
+        String[] msgArr;
         findPrintWriter("Lone").println(msg);
+        System.out.println(msg);
 
 
         //TODO: SEND#Kurt,Lone#Hej Lone -->  MESSAGE#Kurt#Hej Lone
