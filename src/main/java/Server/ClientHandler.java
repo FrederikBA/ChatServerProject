@@ -86,7 +86,7 @@ public class ClientHandler extends Thread {
                     showUsers();
                     break;
                 case "ONLINE":
-                   // showOnlineUsers();
+                    showOnlineUsers();
                     break;
                 default:
                     pw.println("Connection is closing");
@@ -106,6 +106,12 @@ public class ClientHandler extends Thread {
         for (User u : us.getUsers()) {
             pw.println(u);
 
+        }
+    }
+
+    public void showOnlineUsers() {
+        for (String key : allNameWriters.keySet()) {
+            pw.println(key);
         }
     }
 }

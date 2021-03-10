@@ -4,6 +4,7 @@ import Domain.User;
 import Service.UserService;
 
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -45,12 +46,10 @@ public class Dispatcher extends Thread {
         String[] msgArr = msg.split("#");
         String users = msgArr[1];
         String[] userArr = users.split(",");
-        String[] allUserArr = us.getUsernames().toArray(new String[0]);
 
-        //TODO:ALLUSERARR -> ONLINE USER ARRAY
         if (msgArr[1].equals("*")) {
-            for (int i = 0; i < allUserArr.length; i++) {
-                findPrintWriter(allUserArr[i]).println(msgArr[2]);
+            for (String key:allNameWriters.keySet()) {
+                findPrintWriter(key).println(msgArr[2]);
             }
         } else {
             for (int i = 0; i < userArr.length; i++) {
