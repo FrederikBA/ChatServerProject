@@ -67,6 +67,8 @@ public class ClientHandler extends Thread {
     public void protocol() throws IOException {
         pw.println("You are connected");
         pw.println("Connected as: " + name);
+        //TODO: "NAME" HAS CONNECTED.
+        displayConnection( "connected:  " + name);
 
         boolean go = true;
         while (go) {
@@ -103,8 +105,12 @@ public class ClientHandler extends Thread {
 
         }
     }
-    private void sendMessage(String msg){
-        Map<String, Socket> myMap = new HashMap<>();
-        myMap.put("Janus", client);
+    private void displayConnection(String msg){
+        for (User u :us.getUsers()) {
+            pw.println( "Has connected");
+
+        }
+
+
     }
 }
