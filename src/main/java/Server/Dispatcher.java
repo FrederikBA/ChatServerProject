@@ -36,7 +36,6 @@ public class Dispatcher extends Thread {
             try {
                 String msg = allMsg.take();
                 sendMessage(msg);
-                connectedUsers();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,7 +48,7 @@ public class Dispatcher extends Thread {
         String[] userArr = users.split(",");
 
         if (msgArr[1].equals("*")) {
-            for (String key:allNameWriters.keySet()) {
+            for (String key : allNameWriters.keySet()) {
                 findPrintWriter(key).println(msgArr[2]);
             }
         } else {
@@ -57,9 +56,7 @@ public class Dispatcher extends Thread {
                 findPrintWriter(userArr[i]).println(msgArr[2]);
             }
         }
-
     }
-
 
     private PrintWriter findPrintWriter(String name) {
         PrintWriter pw = null;
@@ -67,7 +64,10 @@ public class Dispatcher extends Thread {
         return pw;
     }
 
-    private void connectedUsers() {
+
+    public void sendOnlineMsg() {
+
 
     }
 }
+
