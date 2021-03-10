@@ -108,10 +108,8 @@ public class ClientHandler extends Thread {
             pw.println(key);
         }
     }
-    public void sendOnlineMsg(){
-        for (String key: allNameWriters.keySet()) {
-            pw.println("ONLINE#" + key );
 
-        }
+    public void handleOnlineMsg(){
+
     }
 }

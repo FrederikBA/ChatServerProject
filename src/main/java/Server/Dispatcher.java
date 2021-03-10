@@ -56,9 +56,7 @@ public class Dispatcher extends Thread {
                 findPrintWriter(userArr[i]).println(msgArr[2]);
             }
         }
-
     }
-
 
     private PrintWriter findPrintWriter(String name) {
         PrintWriter pw = null;
@@ -66,11 +64,10 @@ public class Dispatcher extends Thread {
         return pw;
     }
 
-    private void connectedUsers() {
-        String[] allUserArr = us.getUsernames().toArray(new String[0]);
-        for (int i = 0; i < allUserArr.length; i++) {
-            findPrintWriter(allUserArr[i]).println();
+    public void sendOnlineMsg(){
+
 
         }
     }
-}
+
+
