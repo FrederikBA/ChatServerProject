@@ -10,8 +10,8 @@ import java.util.List;
  **/
 public class UserService {
     List<User> users;
-    User user1 = new User("Lone");
-    User user2 = new User("Kurt");
+    User user1 = new User("Janus");
+    User user2 = new User("Gustav");
     User user3 = new User("Frederik");
 
 
@@ -30,6 +30,14 @@ public class UserService {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public List<String> getUsernames() {
+        List<String> stringList = new ArrayList<>();
+        for (User u: getUsers()) {
+            stringList.add(u.getName());
+        }
+        return stringList;
     }
 
     public User getUser1() {

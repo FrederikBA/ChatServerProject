@@ -1,6 +1,10 @@
 package Server;
 
+import Domain.User;
+import Service.UserService;
+
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentMap;
@@ -13,6 +17,7 @@ public class Dispatcher extends Thread {
     BlockingQueue<String> allMsg;
     BlockingQueue<PrintWriter> allWriters;
     ConcurrentMap<String, PrintWriter> allNameWriters;
+    UserService us = new UserService();
 
     public Dispatcher(BlockingQueue<String> allMsg, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.allMsg = allMsg;
@@ -40,9 +45,19 @@ public class Dispatcher extends Thread {
         String[] msgArr = msg.split("#");
         String users = msgArr[1];
         String[] userArr = users.split(",");
-        for (int i = 0; i < userArr.length; i++) {
-            findPrintWriter(userArr[i]).println(msgArr[2]);
+        String[] allUserArr = us.getUsernames().toArray(new String[0]);
+
+
+        if (msgArr[1].equals("*")) {
+            for (int i = 0; i < allUserArr.length; i++) {
+                findPrintWriter(allUserArr[i]).println(msgArr[2]);
+            }
+        } else {
+            for (int i = 0; i < userArr.length; i++) {
+                findPrintWriter(userArr[i]).println(msgArr[2]);
+            }
         }
+
     }
 
     private PrintWriter findPrintWriter(String name) {
