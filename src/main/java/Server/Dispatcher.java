@@ -36,6 +36,7 @@ public class Dispatcher extends Thread {
             try {
                 String msg = allMsg.take();
                 sendMessage(msg);
+                connectedUsers();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -67,10 +68,6 @@ public class Dispatcher extends Thread {
     }
 
     private void connectedUsers() {
-        String[] allUserArr = us.getUsernames().toArray(new String[0]);
-        for (int i = 0; i < allUserArr.length; i++) {
-            findPrintWriter(allUserArr[i]).println();
 
-        }
     }
 }
