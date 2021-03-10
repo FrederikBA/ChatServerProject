@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <finalName>chat-server</finalName>
+        <finalName>chat-Server</finalName>
     </properties>
 
     <dependencies>
@@ -87,7 +87,7 @@
                                 <resource>
                                     <directory>${basedir}/target</directory>
                                     <includes>
-                                        <!--                                        <include>my-server.jar</include>-->
+                                        <!--                                        <include>my-Server.jar</include>-->
                                         <include>${finalName}.jar</include>
                                     </includes>
                                 </resource>

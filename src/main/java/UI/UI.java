@@ -1,6 +1,6 @@
 package UI;
 
-import server.ChatServer;
+import Server.ChatServer;
 
 public class UI {
 

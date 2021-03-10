@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -39,21 +39,13 @@ public class Dispatcher extends Thread {
         }
     }
 
-    private void sendMessageToAll(String msg) {
-        for (PrintWriter pw : allWriters) {
-
-        }
-    }
-
     private void sendMessage(String msg) {
         String[] msgArr = msg.split("#");
-        String users = msgArr[1].toString();
+        String users = msgArr[1];
         String[] userArr = users.split(",");
-        findPrintWriter(userArr[2]).println(msg);
-
-
-        //TODO: SEND#Kurt,Lone#Hej Lone -->  MESSAGE#Kurt#Hej Lone
-        //TODO: Find Lones PrintWriter
+        for (int i = 0; i < userArr.length; i++) {
+            findPrintWriter(userArr[i]).println(msgArr[2]);
+        }
     }
 
     private PrintWriter findPrintWriter(String name) {
@@ -62,8 +54,3 @@ public class Dispatcher extends Thread {
         return pw;
     }
 }
-
-
-//TODO: SEND#Hans#Hello Hans  -->  SEND#Peter,Hans#Hello Hans  -->  MESSAGE#Peter#Hello Hans
-//      Map<String,Socket> myMap = new HashMap<>();
-//      myMap.put("Kurt",client);
