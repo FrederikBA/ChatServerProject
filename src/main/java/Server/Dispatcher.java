@@ -2,6 +2,7 @@ package Server;
 
 import Domain.User;
 import Service.UserService;
+
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -46,7 +47,7 @@ public class Dispatcher extends Thread {
         String[] userArr = users.split(",");
         String[] allUserArr = us.getUsernames().toArray(new String[0]);
 
-
+        //TODO:ALLUSERARR -> ONLINE USER ARRAY
         if (msgArr[1].equals("*")) {
             for (int i = 0; i < allUserArr.length; i++) {
                 findPrintWriter(allUserArr[i]).println(msgArr[2]);
@@ -64,5 +65,13 @@ public class Dispatcher extends Thread {
         PrintWriter pw = null;
         pw = allNameWriters.get(name);
         return pw;
+    }
+
+    private void connectedUsers() {
+        String[] allUserArr = us.getUsernames().toArray(new String[0]);
+        for (int i = 0; i < allUserArr.length; i++) {
+            findPrintWriter(allUserArr[i]).println();
+
+        }
     }
 }

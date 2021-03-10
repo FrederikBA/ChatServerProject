@@ -10,6 +10,7 @@ import java.util.List;
  **/
 public class UserService {
     List<User> users;
+    List<String> usersOnline;
     User user1 = new User("Janus");
     User user2 = new User("Gustav");
     User user3 = new User("Frederik");
@@ -17,6 +18,7 @@ public class UserService {
 
     public UserService() {
         users = new ArrayList<>();
+        usersOnline = new ArrayList<>();
         addUserToList(user1);
         addUserToList(user2);
         addUserToList(user3);
@@ -30,6 +32,9 @@ public class UserService {
 
     public List<User> getUsers() {
         return users;
+    }
+    public List<String> getUsersOnline() {
+        return usersOnline;
     }
 
     public List<String> getUsernames() {

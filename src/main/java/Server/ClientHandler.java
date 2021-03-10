@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentMap;
 
@@ -67,8 +69,6 @@ public class ClientHandler extends Thread {
     public void protocol() throws IOException {
         pw.println("You are connected");
         pw.println("Connected as: " + name);
-        //TODO: "NAME" HAS CONNECTED.
-        displayConnection( "connected:  " + name);
 
         boolean go = true;
         while (go) {
@@ -84,6 +84,9 @@ public class ClientHandler extends Thread {
                     break;
                 case "USERS":
                     showUsers();
+                    break;
+                case "ONLINE":
+                   // showOnlineUsers();
                     break;
                 default:
                     pw.println("Connection is closing");
@@ -104,13 +107,5 @@ public class ClientHandler extends Thread {
             pw.println(u);
 
         }
-    }
-    private void displayConnection(String msg){
-        for (User u :us.getUsers()) {
-            pw.println( "Has connected");
-
-        }
-
-
     }
 }
