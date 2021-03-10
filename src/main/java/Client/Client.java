@@ -5,9 +5,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-/**
- * CREATED BY Janus @ 2021-03-08 - 10:15
- **/
 public class Client {
 
     Socket socket;

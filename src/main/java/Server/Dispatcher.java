@@ -1,24 +1,14 @@
 package Server;
 
-import Domain.User;
-import Service.UserService;
-
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentMap;
-
-/**
- * CREATED BY Janus @ 2021-03-08 - 14:08
- **/
 
 public class Dispatcher extends Thread {
     BlockingQueue<String> allMsg;
     BlockingQueue<PrintWriter> allWriters;
     ConcurrentMap<String, PrintWriter> allNameWriters;
-    UserService us = new UserService();
 
     public Dispatcher(BlockingQueue<String> allMsg, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.allMsg = allMsg;
@@ -62,12 +52,6 @@ public class Dispatcher extends Thread {
         PrintWriter pw = null;
         pw = allNameWriters.get(name);
         return pw;
-    }
-
-
-    public void sendOnlineMsg() {
-
-
     }
 }
 

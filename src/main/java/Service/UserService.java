@@ -5,9 +5,6 @@ import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * CREATED BY Janus @ 2021-03-09 - 09:36
- **/
 public class UserService {
     List<User> users;
     User user1 = new User("Janus");
@@ -35,17 +32,5 @@ public class UserService {
             stringList.add(u.getName());
         }
         return stringList;
-    }
-
-    public User getUser1() {
-        return user1;
-    }
-
-    public User getUser2() {
-        return user2;
-    }
-
-    public User getUser3() {
-        return user3;
     }
 }
