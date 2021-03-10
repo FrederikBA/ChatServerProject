@@ -2,7 +2,6 @@ package Server;
 
 import Domain.User;
 import Service.UserService;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +25,6 @@ public class ClientHandler extends Thread {
     String name;
     public ConcurrentMap<String, PrintWriter> allNameWriters;
 
-
     public ClientHandler(Socket client, BlockingQueue<String> allMsgQ, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.client = client;
         this.allMsgQ = allMsgQ;
@@ -38,7 +36,6 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-
     @Override
     public void run() {
         try {
@@ -47,7 +44,6 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-
     public void login() throws IOException {
         pw.println("Proceed to log in:");
         String message = br.readLine();
@@ -96,12 +92,10 @@ public class ClientHandler extends Thread {
             }
         }
     }
-
     private void handleMsg(String[] messageArr) throws IOException {
         String msg = messageArr[0] + "#" + messageArr[1] + "#" + "\"" + messageArr[2] + "\"" + " from " + name;
         allMsgQ.add(msg);
     }
-
     public void showUsers() {
         for (User u : us.getUsers()) {
             pw.println(u);
