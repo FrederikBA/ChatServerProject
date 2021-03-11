@@ -45,9 +45,9 @@ public class ClientHandler extends Thread {
         pw.println("Proceed to log in:");
         String message = br.readLine();
         String[] messageArr = message.split("#");
-        name = messageArr[1];
         switch (messageArr[0]) {
             case "CONNECT":
+                name = messageArr[1];
                 if (us.getUsernames().contains(name)) {
                     allNameWriters.put(name, pw);
                     handleStatusMsg(messageArr);
@@ -57,6 +57,11 @@ public class ClientHandler extends Thread {
                     System.out.println("Client disconnected");
                     client.close();
                 }
+                break;
+            default:
+                pw.println("Unknown command, connection is closing");
+                System.out.println("Client disconnected");
+                client.close();
                 break;
         }
     }
@@ -71,6 +76,7 @@ public class ClientHandler extends Thread {
 
             switch (messageArr[0]) {
                 case "CLOSE":
+                    pw.println("Connection is closing");
                     System.out.println("Client " + "\"" + name + "\"" + " disconnected");
                     go = false;
                     allNameWriters.remove(name, pw);
@@ -87,12 +93,7 @@ public class ClientHandler extends Thread {
                     showOnlineUsers();
                     break;
                 default:
-                    pw.println("Connection is closing");
-                    System.out.println("Client " + "\"" + name + "\"" + " disconnected");
-                    go = false;
-                    allNameWriters.remove(name, pw);
-                    handleStatusMsg(messageArr);
-                    client.close();
+                    pw.println("Unknown Command");
                     break;
             }
         }
