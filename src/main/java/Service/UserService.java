@@ -37,9 +37,4 @@ public class UserService {
         }
         return stringList;
     }
-
-    public String[] getUsernamesString() {
-        String[] names = getUsernames().toArray(new String[0]);
-        return names;
-    }
 }
