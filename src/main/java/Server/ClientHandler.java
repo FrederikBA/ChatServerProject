@@ -50,6 +50,7 @@ public class ClientHandler extends Thread {
             case "CONNECT":
                 if (us.getUsernames().contains(name)) {
                     allNameWriters.put(name, pw);
+                    handleStatusMsg(messageArr);
                     protocol();
                 } else {
                     pw.println("User not found");
@@ -73,6 +74,7 @@ public class ClientHandler extends Thread {
                     System.out.println("Client " + "\"" + name + "\"" + " disconnected");
                     go = false;
                     allNameWriters.remove(name, pw);
+                    handleStatusOfflineMsg(message);
                     client.close();
                     break;
                 case "SEND":
@@ -89,6 +91,7 @@ public class ClientHandler extends Thread {
                     System.out.println("Client " + "\"" + name + "\"" + " disconnected");
                     go = false;
                     allNameWriters.remove(name, pw);
+                    handleStatusMsg(messageArr);
                     client.close();
                     break;
             }
@@ -99,6 +102,20 @@ public class ClientHandler extends Thread {
         String msg = messageArr[0] + "#" + messageArr[1] + "#" + "\"" + messageArr[2] + "\"" + " from " + name;
         allMsgQ.add(msg);
     }
+
+    private synchronized void handleStatusMsg(String[] messageArr) {
+        if (messageArr[0].equals("CONNECT")) {
+            String msg = messageArr[0] + "#" + messageArr[1] + ",";
+            allMsgQ.add(msg);
+        }
+    }
+
+    private void handleStatusOfflineMsg(String message) {
+        if (message.equals("CLOSE")) {
+            allMsgQ.add(message);
+        }
+    }
+
 
     public void showUsers() {
         for (User u : us.getUsers()) {

@@ -10,12 +10,16 @@ public class UserService {
     User user1 = new User("Janus");
     User user2 = new User("Gustav");
     User user3 = new User("Frederik");
+    User user4 = new User("Kurt");
+    User user5 = new User("Lone");
 
     public UserService() {
         users = new ArrayList<>();
         addUserToList(user1);
         addUserToList(user2);
         addUserToList(user3);
+        addUserToList(user4);
+        addUserToList(user5);
     }
 
     public void addUserToList(User user) {

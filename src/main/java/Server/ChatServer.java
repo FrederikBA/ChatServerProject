@@ -30,7 +30,6 @@ public class ChatServer {
             dispatcher.addWriterToList(clientHandler.pw);
             clientHandler.start();
         }
-
     }
 
     public static void main(String[] args) {

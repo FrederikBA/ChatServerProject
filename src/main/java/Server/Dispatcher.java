@@ -33,20 +33,31 @@ public class Dispatcher extends Thread {
     }
 
     private void sendMessage(String msg) {
-        String[] msgArr = msg.split("#");
-        String users = msgArr[1];
-        String[] userArr = users.split(",");
-
-        if (msgArr[1].equals("*")) {
+        if (msg.equals("CLOSE")) {
             for (String key : allNameWriters.keySet()) {
-                findPrintWriter(key).println(msgArr[2]);
+                findPrintWriter(key).println("ONLINE#" + allNameWriters.keySet());
             }
         } else {
-            for (int i = 0; i < userArr.length; i++) {
-                findPrintWriter(userArr[i]).println(msgArr[2]);
+            String[] msgArr = msg.split("#");
+            String users = msgArr[1];
+            String[] userArr = users.split(",");
+
+            if (msgArr[0].equals("CONNECT")) {
+                for (String key : allNameWriters.keySet()) {
+                    findPrintWriter(key).println("ONLINE#" + allNameWriters.keySet());
+                }
+            } else if (msgArr[1].equals("*")) {
+                for (String key : allNameWriters.keySet()) {
+                    findPrintWriter(key).println(msgArr[2]);
+                }
+            } else {
+                for (int i = 0; i < userArr.length; i++) {
+                    findPrintWriter(userArr[i]).println(msgArr[2]);
+                }
             }
         }
     }
+
 
     private PrintWriter findPrintWriter(String name) {
         PrintWriter pw = null;
