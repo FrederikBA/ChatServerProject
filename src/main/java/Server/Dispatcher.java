@@ -11,8 +11,6 @@ public class Dispatcher extends Thread {
     BlockingQueue<String> allMsg;
     BlockingQueue<PrintWriter> allWriters;
     ConcurrentMap<String, PrintWriter> allNameWriters;
-    UserService us = new UserService();
-
 
     public Dispatcher(BlockingQueue<String> allMsg, ConcurrentMap<String, PrintWriter> allNameWriters) {
         this.allMsg = allMsg;
